@@ -1,0 +1,193 @@
+{
+  "info": {
+    "_postman_id": "9f8c7e12-4a5b-4d8e-9b23-1234567890ab",
+    "name": "REST API Pencarian Titik Pengumpulan E-Waste (KSM Veterantech UPNVJ 2026)",
+    "description": "Koleksi pengujian seluruh endpoint REST API Pencarian Titik Pengumpulan Sampah Elektronik (E-Waste) sesuai SRS Final Project Study Club Backend Basic.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:5000",
+      "type": "string"
+    },
+    {
+      "key": "location_id",
+      "value": "6650a1b2c3d4e5f678901234",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Simulasi Login (Opsional)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"chandra\",\n  \"password\": \"veterantech2026\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/auth/login",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        },
+        "description": "Menguji endpoint simulasi login. Mengembalikan status 200 dan dummy token."
+      },
+      "response": []
+    },
+    {
+      "name": "2. Tambah Titik E-Waste (Create)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"namaTempat\": \"Bank Sampah E-Waste Jakarta Selatan\",\n  \"alamat\": \"Jl. RS. Fatmawati Raya No. 1, Pondok Labu, Cilandak, Jakarta Selatan\",\n  \"kategoriSampah\": [\"Baterai\", \"Kabel\", \"Layar\", \"PCB\"],\n  \"jamOperasional\": \"Senin - Jumat (08.00 - 16.00 WIB)\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/locations",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "locations"
+          ]
+        },
+        "description": "Menambahkan data titik pengumpulan baru ke MongoDB. Wajib menyertakan namaTempat dan alamat."
+      },
+      "response": []
+    },
+    {
+      "name": "3. Lihat Semua Titik E-Waste (Read All)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/locations",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "locations"
+          ]
+        },
+        "description": "Menampilkan seluruh daftar lokasi pengumpulan sampah elektronik dari MongoDB."
+      },
+      "response": []
+    },
+    {
+      "name": "4. Cari Titik E-Waste dengan Query Parameter (Search)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/locations?search=jakarta",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "locations"
+          ],
+          "query": [
+            {
+              "key": "search",
+              "value": "jakarta",
+              "description": "Kata kunci pencarian berdasarkan namaTempat atau alamat"
+            }
+          ]
+        },
+        "description": "Mencari lokasi menggunakan Query Parameter (?search=jakarta) berdasarkan namaTempat atau alamat."
+      },
+      "response": []
+    },
+    {
+      "name": "5. Lihat Detail Titik E-Waste Berdasarkan ID (Read One)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/locations/{{location_id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "locations",
+            "{{location_id}}"
+          ]
+        },
+        "description": "Menampilkan satu data spesifik berdasarkan Path Parameter /:id. Mengembalikan 404 jika ID tidak valid atau tidak ditemukan."
+      },
+      "response": []
+    },
+    {
+      "name": "6. Ubah Data Titik E-Waste Berdasarkan ID (Update)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"namaTempat\": \"Drop Point E-Waste UPNVJ Pondok Labu\",\n  \"alamat\": \"Jl. RS. Fatmawati Raya, Pondok Labu, Jakarta Selatan\",\n  \"kategoriSampah\": [\"Baterai\", \"Kabel\", \"Layar\", \"Smartphone Rusak\"],\n  \"jamOperasional\": \"Senin - Sabtu (08.00 - 17.00 WIB)\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/locations/{{location_id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "locations",
+            "{{location_id}}"
+          ]
+        },
+        "description": "Memperbarui informasi titik pengumpulan berdasarkan Path Parameter /:id."
+      },
+      "response": []
+    },
+    {
+      "name": "7. Hapus Data Titik E-Waste Berdasarkan ID (Delete)",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/locations/{{location_id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "locations",
+            "{{location_id}}"
+          ]
+        },
+        "description": "Menghapus data titik pengumpulan secara permanen dari MongoDB berdasarkan Path Parameter /:id."
+      },
+      "response": []
+    }
+  ]
+}
