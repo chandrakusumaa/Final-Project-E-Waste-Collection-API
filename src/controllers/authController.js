@@ -1,7 +1,3 @@
-/**
- * Controller Simulasi Login (Opsional sesuai SRS Bagian 3)
- * Hanya simulasi autentikasi agar tidak melanggar aturan satu entitas database.
- */
 const loginSimulation = async (req, res) => {
   try {
     const { username, password } = req.body;
